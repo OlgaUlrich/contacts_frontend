@@ -1,44 +1,49 @@
-import React, {useState} from "react"
-
+import React from "react"
+import Buttons from "./buttons";
 import styled from 'styled-components';
 import { useFormik } from "formik";
-import * as Yup from "yup"
+import * as Yup from "yup";
+import save from "./assets/save.svg";
  
  
  
 const Wrapper = styled.div`
-    form{
-     width: 30%;
-     margin: auto;
-      margin-top:5%;
-     min-height:150px;
- 
+color: ${props => props.theme.textColor};
+width: 70%;
+height: 100%;
+form{
+ width: 30%;
+ margin: auto;
+ margin-top: 0;
+
+
    
- 
-     .InputWrapper{
-         width: 100%;
-         color:red;
-        input{
-    height: 3em;
+ .InputWrapper{
     width: 100%;
-    border-style:none;
-    margin-right:10px;
-    padding-left:15px;
+    color:red;
+    
+input{
+height: 3em;
+width: 100%;
+border-style:none;
+margin-right:10px;
+padding-left:15px;
+margin-top: 1rem;
 }
 input:focus {
-    outline: none;
+outline: none;
+}
+}
+.ButtonWrapper{
+    display: flex;
+    justify-content:center;
+    padding-top:3rem;
+    button{
+    padding: 2rem 5rem 2rem 5rem;
+    border-radius:28px;
+  
     }
-     }
-     .ButtonWrapper{
-         display: flex;
-         justify-content:center;
-         padding-top:3rem;
-         button{
-         padding: 2rem 5rem 2rem 5rem;
-         border-radius:28px;
-       
-         }
- }
+}
  
  
 `
@@ -83,6 +88,7 @@ function RegistrationForm(props){
     return(
   <Wrapper>
  <form onSubmit={handleSubmit}>
+ <h1>Registration</h1>
          <div className="InputWrapper">
         <input type="text" value={values.username} placeholder="Username" onChange={handleChange} name="username"/>
         {touched.username && errors.username ? (
@@ -114,7 +120,7 @@ function RegistrationForm(props){
         ):null}
         </div>
          <div  className="ButtonWrapper">
-        <button className="subBut" type="submit">Submit</button>
+        <Buttons iconBt={save} className="subBut" type="submit" textBt=" Submit"></Buttons>
         </div>  
         </form>          
  

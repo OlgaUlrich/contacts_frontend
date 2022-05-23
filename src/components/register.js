@@ -5,8 +5,6 @@ import RegistrationForm from "./RegistrationForm";
 
 
 
-//import { useNavigate } from "react-router-dom";
- 
  
  
 const Pr = styled.div`
@@ -20,14 +18,13 @@ const Pr = styled.div`
 function Signup(){
 const [error, setError] = useState(false);
 const [loading, setLoading] = useState(false);
+const [msg, setMsg] = useState("");
  
  
-  //let navigate = useNavigate()
  
  
    const handleSignUp =  (username, first_name, last_name, mail, password) => {
        
-        console.log('u clicked sign up continue');
         const url = 'https://my-contacts-book-api.herokuapp.com/api/auth/register';
         const method = 'POST';
         const body = {
@@ -48,11 +45,11 @@ const [loading, setLoading] = useState(false);
  
         fetch(url, config)
             .then((response) => {
-                console.log('responsej', response.status);
+                console.log('responsej', response.json());
                 if (response.status === 201) {
                     return response.status
                 } else {
-                    return response.json();
+                    return setMsg(response.status);
                 }
  
             })
@@ -61,16 +58,18 @@ const [loading, setLoading] = useState(false);
                 // This email is taken
                 //
                 console.log('user data', data);
-               // if (data === 201) {
-                 //   setLoading(true)
+               if (data === 201) {
+               setLoading(true)
                 //     setTimeout(() => {
                  //       setLoading(false)
                  //       return navigate('/validation');
  
                  //   }, 6000)
-             //   } else {
-             //       setError(true)
-              //  }
+             } else {
+              setError(true)
+              setMsg(data);
+
+              }
             })
  
     }
@@ -80,13 +79,14 @@ const [loading, setLoading] = useState(false);
         <>
  
        
-        <div style={{"display":"flex", "flexDirection":"column", "width":"100%", "height":"100vh"}}>
+    
    
  
-         <div style={{"flex": "auto"}}>
-        <h1>Registration</h1>
+         <div style={{"marginTop": "0", "width":"100%", "padding":"0", "display":"flex", "justifyContent":"center"}}>
+   
         { error === true ?
-            <Pr>Something went wrong, please, try again
+            <Pr>Something went wrong. Probably, this name was used.
+            {msg}
             {
                 <div onClick={()=>{document.location.reload()}}
                 style={{'color':'blue', "textDecoration":"underline", "cursor":"pointer"}}>Go back</div>
@@ -94,7 +94,7 @@ const [loading, setLoading] = useState(false);
             </Pr>
     :
         loading === true ?
-        <Pr>Thanks for your registration. Our hard working monkeys are preparing a digital message called E-Mail that will be sent to you soon. Since monkeys arent good in writing the message could end up in you junk folder. Our apologies for any inconvienience. Thank for patience.
+        <Pr>Thanks for your registration. Now you can login with your credentials.
         </Pr>
         :
         <RegistrationForm handleSignUp={handleSignUp}/>
@@ -104,7 +104,7 @@ const [loading, setLoading] = useState(false);
  
  
   
-    </div>
+
      
    
         </>

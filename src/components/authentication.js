@@ -1,211 +1,174 @@
-import React, {useState} from "react"
-
+import React, {useState, useEffect, useLayoutEffect} from "react"
+import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
-import { useFormik } from "formik";
-import * as Yup from "yup";
-//import { useNavigate } from "react-router-dom";
-import {
-  Link
-  } from "react-router-dom";
-  import DarkModeToggle from "react-dark-mode-toggle";
-  
+import Login from "./LoginForm";
+import Signup from "./register";
+import Buttons from "./buttons";
+import save from "./assets/save.svg";
+import logout from "./assets/logout.svg";
+import hello from "./assets/hello.svg";
  
- 
- 
-const Pr = styled.div`
-     width: 20%;
-     margin: auto;
-     margin-top:5%;
-`
- 
-const Wrapper = styled.div`
-background-color: ${props => props.theme.pageBackgroung};
-color: ${props => props.theme.textColor};
+const MainWrap = styled.div`
 width: 100%;
 height: 100%;
-    form{
-     width: 30%;
-     margin: auto;
-     margin-top:5%;
- 
- 
-   
- 
-     .InputWrapper{
-         width: 100%;
-         color:red;
-        input{
-    height: 3em;
-    width: 100%;
-    border-style:none;
-    margin-right:10px;
-    padding-left:15px;
-    margin-top: 1rem;
-}
-input:focus {
-    outline: none;
+display: flex;
+background-color: #252525;
+
+
+.rightNav{
+    background-image: url("./assets/bg.jpeg");
+    background-repeat: no-repeat;
+    background-position: center; 
+    background-color: #fff;
+    height:100%;
+   width:70%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+
+    .question{
+        background-color: rgba(242, 241, 239, 0.5);
+        height: 100%;
+        position: relative;
+
+    div{
+          padding: 2rem;
     }
-     }
-     .ButtonWrapper{
-         display: flex;
-         justify-content:center;
-         padding-top:3rem;
-         button{
-         padding: 2rem 5rem 2rem 5rem;
-         border-radius:28px;
-       
-         }
- }
- 
- 
+    }
+}
+.leftNav{
+    background-color: rgba(242, 241, 239, 0.5);
+    width:30%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+
+    form{
+      width:100%;
+    }
+
+  h1{
+    text-align:center;
+  }
+    
+    button{
+        width: 200px !important;
+        height: 40px !important;
+    }
+}
+
+}
+
 `
  
  
  
  
- 
- 
-function Login(props){
+function Authentication(props){
 const [err, setError] = useState('');
-// let navigate = useNavigate()
-const [congrats, setCongrats] = useState(false)
+const [form, setForm] = useState('login');
+const [useCred, setUseCred] = useState(false)
 
-const [isDarkMode, setIsDarkMode] = useState(() => false);
-    
-
-if (isDarkMode === false){
-    props.settheme('light');
-} else if(isDarkMode === true){
-    props.settheme('dark')
-}
+let navigate = useNavigate();   
+let name = "olga"
+let pass = "Q1q1q1qwe%"
 
 
- const  { handleSubmit, handleChange, values, touched, errors }= useFormik({
-        initialValues: {
-            username: '',
-            password: '',
- 
-        },
-        validationSchema: Yup.object({
-            username: Yup.string().min(2,  "Length of min username 2").required('Required'),
-            password: Yup.string().min(8,  "Length of min password 8").required('Required'),
-           
-        }),
-        onSubmit: (values, onSubmitProps) =>{
-           LoginRequest(values.username, values.password)
-            onSubmitProps.setSubmitting(false)
-            onSubmitProps.resetForm()
- 
-       
-        }
-    })
- 
- 
-const LoginRequest = (username, password) =>{
-    const url = "https://my-contacts-book-api.herokuapp.com/api/auth/login";
-        const method = "POST";
+useEffect(() => {
+   if(localStorage.getItem('token')){
+    return navigate("/app");
+  }
 
-        const body = {
-            username: username,
-            password: password,
-        };
-        const headers = new Headers({
-            "Content-type": "application/json",
-         
-        });
-        const config = {
-            method: method,
-            body: JSON.stringify(body),
-            headers: headers,
-        };
- 
-        fetch(url, config)
- 
-            .then((response) => {
-               
-                  if (response.status === 200) {
-                    return response.json()
-                }
-                else{
-                    return setError(true)
-                }
- 
-               
-            })
-            .then((data) => {
-                localStorage.setItem('token', data.token);
-               console.log(data)
-                //if(data){
-                  //  localStorage.setItem("token", data.access);  
-                   // localStorage.setItem("refresh", data.refresh);  
-                   // return navigate('/');
-                //}  
-            })                  
-       
-    };
+  }, [localStorage.getItem('token')]);
+
  
  
  
     return(
-        <>
+       
 
 
-<div style={{"display":"flex", "flexDirection":"column", "width":"100%", "height":"100vh"}}>
+
       
-        <h1>Login</h1>
-    <div style={{"flex": "auto"}}>
+   <> 
+<MainWrap> 
+<div className="leftNav">
+  {
+      form === "login"
+    
+      ?
+    <Login useCred={useCred} name={name} pass={pass} existSet={props.existSet}/>
 
-    <DarkModeToggle
-      onChange={setIsDarkMode}
-      checked={isDarkMode}
-      size={80}
-    />
-            <Wrapper>
+      :
  
-             {err ?
-   
-              <Pr>
-              No active account found with the given credentials.
-            {
-                <div onClick={()=>{document.location.reload()}}
-                style={{'color':'blue', "textDecoration":"underline", "cursor":"pointer"}}>Go back</div>
-            }
-            </Pr>
-   
-    :
-        <form onSubmit={handleSubmit}>
-          <div className="InputWrapper">
-        <input type="text" value={values.username} placeholder="Username" onChange={handleChange} name="username"/>
-        {touched.username && errors.username ? (
-            <div>{errors.username}</div>
-        ):null}
-        </div>
- 
-      <div className="InputWrapper">
-    <input type='password' placeholder="Password" value={values.password} onChange={handleChange} name="password"/>
-    {touched.password && errors.password ? (
-            <div>{errors.password}</div>
-        ):null}
-    </div>
- 
-        <div  className="ButtonWrapper">
-        <button> Log in
-           </button>
-        </div>
- 
-        </form>
-    }
-    </Wrapper>
-    </div>
- 
- 
+
+      form === "registrate"
+
+      ?
+    <Signup />
+
+      :
+
+      <></>
+
+  }
   
- 
+ </div>
+
+
+<div className="rightNav">
+{
+    form === "login" ?
+
+   <>
+    <div className="question">
+<div>
+  Don't want to registrate?
+  <br/>
+  <br/>
+  Just use ready credentials.
+  <br/>
+  <br/>
+  <Buttons textBt="Use" iconBt={save} passfunction={setUseCred} arg={Boolean(true)} >  </Buttons>
+  <br/>
+  <br/>
+  or
+  <br/> 
+  <br/>
+  <br/>
+  <Buttons textBt="Registration" iconBt={logout} passfunction={setForm} arg="registrate"></Buttons>
+  </div>
+
+    </div>
+
+
+   </>
+   :
+   <div className="question">
+     <div>
+     Do you already have an account?
+     <br/>
+  <br/>
+   <Buttons textBt="Login" iconBt={hello} passfunction={setForm} arg='login'></Buttons>
+    </div>
+  </div>
+
+}
+  
 </div>
  
-        </>
+ </MainWrap>
+
+
+
+ </>
+      
     )
 }
  
  
-export default Login
+export default Authentication
