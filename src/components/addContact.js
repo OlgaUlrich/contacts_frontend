@@ -22,6 +22,7 @@ display: flex;
 .form-initial{
    position: fixed;
    top: 100px;
+   padding-bottom: 1rem !important;
  
 
    right: -500px;
@@ -132,7 +133,7 @@ useEffect(() => {
  
  
 const NewContactRequest = (first_name, last_name, country_code, phone_number, is_favourate, contact_picture) =>{
-    const url = "https://my-contacts-book-api.herokuapp.com/api/contacts/";
+    const url = "https://newappcontacts.herokuapp.com/api/contacts/";
         const method = "POST";
 
         const formData = new FormData();

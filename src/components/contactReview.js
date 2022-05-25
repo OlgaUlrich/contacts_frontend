@@ -119,7 +119,7 @@ useEffect(() => {
      
       if(conf === true){
      
-            const url = `https://my-contacts-book-api.herokuapp.com/api/contacts/${arg}`
+            const url = `https://newappcontacts.herokuapp.com/api/contacts/${arg}`
             const method = 'DELETE'
             const token = localStorage.getItem('token');
     
@@ -165,7 +165,7 @@ useEffect(() => {
 
     function editContact(arg){
 
-        const url = `https://my-contacts-book-api.herokuapp.com/api/contacts/${arg}`;
+        const url = `https://newappcontacts.herokuapp.com/api/contacts/${arg}`;
         const method = "PATCH";
 
         const formData = new FormData();

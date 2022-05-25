@@ -25,7 +25,7 @@ const [msg, setMsg] = useState("");
  
    const handleSignUp =  (username, first_name, last_name, mail, password) => {
        
-        const url = 'https://my-contacts-book-api.herokuapp.com/api/auth/register';
+        const url = 'https://newappcontacts.herokuapp.com/api/auth/register';
         const method = 'POST';
         const body = {
             username: username,

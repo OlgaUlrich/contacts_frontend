@@ -1,9 +1,6 @@
 import './App.css';
-import DarkModeToggle from "react-dark-mode-toggle";
-import Logout from "./components/assets/logout.svg";
-import Add from "./components/assets/add.svg";
 import { GlobalStyle } from "./GlobalStyle";
-import styled, { ThemeProvider } from "styled-components"
+import { ThemeProvider } from "styled-components"
 import React, {useState, useEffect} from 'react';
 import AppWrapper from './components/appWrapper';
 import Signup from './components/register';
@@ -18,35 +15,6 @@ import {
   useNavigate
 } from "react-router-dom";
 
-const Header = styled.header`
-     background-color: ${props => props.theme.textColor};
-     display:flex;
-     padding-left: 2rem;
-     padding-right: 2rem;
-     padding-top:1rem;
-     padding-bottom:1rem;
-     img{
-         width: 3rem;
-         height: 3rem;
-         filter: ${props => props.theme.filterSvg};
-     }
-     .addContactBt{
-     transform: rotate(0deg);
-       transition: transform 2s;
-     
-       
-     }
-     
-     .logoutBt{
-         transform: rotate(180deg);
-         margin-right: 1rem;
-     }
-     
-     .addContactBt.turned{
-         transform: rotate(45deg);
-     }
-
- `
  
 
 

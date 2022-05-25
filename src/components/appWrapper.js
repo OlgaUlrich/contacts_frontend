@@ -373,7 +373,7 @@ function AppWrapper(props){
         
         function FetchContact(arg){
 
-            const url = `https://my-contacts-book-api.herokuapp.com/api/contacts/${Number(arg)}`
+            const url = `https://newappcontacts.herokuapp.com/api/contacts/${Number(arg)}`
             const method = 'GET'
             const token = localStorage.getItem('token');
             const headers = new Headers({
@@ -404,7 +404,7 @@ function AppWrapper(props){
         function deleteContact(arg){
             setShowed(true);
        
-                  const url = `https://my-contacts-book-api.herokuapp.com/api/contacts/${arg}`
+                  const url = `https://newappcontacts.herokuapp.com/api/contacts/${arg}`
                 
                   const method = 'DELETE'
                   const token = localStorage.getItem('token');

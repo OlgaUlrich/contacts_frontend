@@ -56,7 +56,7 @@ function addDefaultSrc(ev){
 
     
     const fetchContacts = () => {
-        const url = "https://my-contacts-book-api.herokuapp.com/api/contacts/"
+        const url = "https://newappcontacts.herokuapp.com/api/contacts/"
         const method = 'GET'
 
         const token = localStorage.getItem('token');
